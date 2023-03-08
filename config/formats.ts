@@ -133,6 +133,28 @@ export const Formats: FormatList = [
 		},
 	},
 	{
+		name: "[Gen 9] Mad Chemists",
+		desc: `see thread for more info`,
+		threads: [
+			`<a href="https://www.smogon.com/forums/threads/mad-chemists.3717046/">Mad Chemists</a>`,
+		],
+		mod: 'madchemists',
+		ruleset: ['Standard', 'Dynamax Clause'],
+		onSwitchIn(pokemon) {
+			this.add('-start', pokemon, 'typechange', pokemon.types.join('/'), '[silent]');
+		},
+		onValidateTeam(team, format) {
+			/**@type {{[k: string]: true}} */
+			let speciesTable = {};
+			for (const set of team) {
+				let template = this.dex.getSpecies(set.species);
+				if (template.tier !== 'MC') {
+					return [set.species + ' is not useable in Mad Chemists.'];
+				}
+			}
+		},
+	},
+	{
 		name: "[Gen 8] More Balanced Hackmons",
 		desc: `<b>More Balanced Hackmons</b>: A National Dex mod of Balanced Hackmons with new pokemon, moves, and abilities, as well as some additional bans.`,
 		threads: [
